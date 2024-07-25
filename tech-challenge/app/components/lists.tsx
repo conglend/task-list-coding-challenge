@@ -17,17 +17,29 @@ export default function CreateList() {
 
     function saveData(event: any) {
         event.preventDefault();
-        console.log('formObj', formObj);
         let data: any = [...taskList];
         data.push(formObj);
         setTaskList(data);
-        console.log('taskList', taskList);
+
     }
 
     const handleChange = (event: any) => {
         const name = event.target.name;
         const value = event.target.value;
         setFormObj(values => ({ ...values, [name]: value }))
+    }
+
+    function onDelete(itemIndex: any) {
+        let data: any = [...taskList];
+        data.splice(itemIndex, 1);
+        setTaskList(data);
+    }
+
+    function onCopy(index: any) {
+        let data: any = [...taskList];
+        data.push(data[index]);
+        setTaskList(data);
+
     }
 
     return (
@@ -54,7 +66,7 @@ export default function CreateList() {
                             <Col lg="8">
                                 <label>Column number</label>
 
-                                <input type="text" name="columnNumber"
+                                <input type="number" name="columnNumber"
                                     onChange={handleChange} value={formObj.columnNumber || ""}>
 
                                 </input>
@@ -69,32 +81,84 @@ export default function CreateList() {
                 <div>
                     <Row>
                         {
-                            taskList?.length && taskList.map((item: any) => (
-                                <div>
-                                    {
-                                        item.columnNumber == 1 &&
-                                        <Col>
-                                            <div>
-                                                {item.label}
-                                            </div>
-                                        </Col>
-                                    }
-                                    {item.columnNumber == 2 &&
-                                        <Col>
-                                            <div>
-                                                {item.label}
-                                            </div>
-                                        </Col>
-                                    }
+                            taskList?.length && taskList.map((item: any, index) => (
+                                <Row>
+                                    <Col md={4} lg={4}>
+                                        <div>
+                                            {
+                                                item.columnNumber == 1 &&
+                                                <div className="d-flex p-3 m-3 flex-column bd-highlight bg-white text-black">
 
-                                    {item.columnNumber == 3 &&
-                                        <Col>
-                                            <div>
-                                                {item.label}
-                                            </div>
-                                        </Col>
-                                    }
-                                </div>
+                                                    <div>
+                                                        Label: {item.label}
+                                                    </div>
+                                                    <div>
+                                                        Description: {item.description}
+                                                    </div>
+
+                                                    <div className="d-flex flex-row bd-highlight mb-3">
+                                                        <button className="p-2 bd-highlight"
+                                                            onClick={() => onDelete(index)}
+                                                        >Delete</button>
+                                                        <button className="p-2 bd-highlight"
+                                                            onClick={() => onCopy(index)}>Copy</button>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col md={4} lg={4}>
+                                        <div>
+                                            {
+                                                item.columnNumber == 2 &&
+                                                <div className="d-flex p-3 m-3 flex-column bd-highlight bg-white text-black">
+
+                                                    <div>
+                                                        Label: {item.label}
+                                                    </div>
+                                                    <div>
+                                                        Description: {item.description}
+                                                    </div>
+
+                                                    <div className="d-flex flex-row bd-highlight mb-3">
+                                                        <button className="p-2 bd-highlight"
+                                                            onClick={() => onDelete(index)}
+                                                        >Delete</button>
+                                                        <button className="p-2 bd-highlight"
+                                                            onClick={() => onCopy(index)}>Copy</button>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col md={4} lg={4}>
+                                        <div>
+                                            {
+                                                item.columnNumber == 3 &&
+                                                <div className="d-flex p-3 m-3 flex-column bd-highlight bg-white text-black">
+
+                                                    <div>
+                                                        Label: {item.label}
+                                                    </div>
+                                                    <div>
+                                                        Description: {item.description}
+                                                    </div>
+
+                                                    <div className="d-flex flex-row bd-highlight mb-3">
+                                                        <button className="p-2 bd-highlight"
+                                                            onClick={() => onDelete(index)}
+                                                        >Delete</button>
+                                                        <button className="p-2 bd-highlight"
+                                                            onClick={() => onCopy(index)}>Copy</button>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </Col>
+                                </Row>
 
                             ))
                         }
